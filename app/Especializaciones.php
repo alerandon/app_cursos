@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class Especializaciones extends Model
 {
-    protected $fillable = ['id', 'especializacion'];
+    protected $fillable = ['id', 'especializacion', 'descripcion'];
 }
