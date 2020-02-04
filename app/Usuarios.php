@@ -2,9 +2,13 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
+use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Usuarios extends Model
+class Usuarios extends Authenticatable
 {
+    Use Notifiable, HasRole;
+
     protected $fillable = ['id', 'nombre', 'contraseña', 'correo', 'rol'];
 }

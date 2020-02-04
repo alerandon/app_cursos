@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Usuarios;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
+
 
 class UsuariosController extends Controller
 {
@@ -22,7 +25,7 @@ class UsuariosController extends Controller
 
     }
 
-    public function store() {
+    public function store(Request $request) {
 
         request()->validate([
             'nombre' => 'required',
@@ -32,11 +35,44 @@ class UsuariosController extends Controller
         ]);
 
         Usuarios::create([
-            'nombre' => 'required',
-            'contraseña' => 'required',
-            'correo' => 'required',
-            'rol' => 'required'
+            'nombre' => request['nombre'],
+            'contraseña' => request['contraseña'],
+            'correo' => request['correo'],
+            'rol' => request['rol']
         ]);
+
+        Role::create(['name' => request['rol']]);
+
+        if (request['rol'] == "estudiante") {
+
+            Permission::create(['name' => 'read_especializacion']);
+            Permission::create(['name' => 'read_curso']);
+            Permission::create(['name' => 'read_lecciones']);
+
+        }
+        else if (request['rol'] == "instructor") {
+
+            Permission::create(['name' => 'create_especializacion']);
+            Permission::create(['name' => 'create_curso']);
+            Permission::create(['name' => 'create_leccion']);
+
+            Permission::create(['name' => 'read_especializacion']);
+            Permission::create(['name' => 'read_curso']);
+            Permission::create(['name' => 'read_leccion']);
+
+            Permission::create(['name' => 'update_especializacion']);
+            Permission::create(['name' => 'update_curso']);
+            Permission::create(['name' => 'update_leccion']);
+
+            Permission::create(['name' => 'delete_especializacion']);
+            Permission::create(['name' => 'delete_curso']);
+            Permission::create(['name' => 'delete_leccion']);
+
+        }
+
+        $permission = Permission::create(['name' => 'edit articles']);
+
+        $role->givePermissionTo($permission);
 
         return redirect('/usuarios');
 
