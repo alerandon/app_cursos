@@ -35,7 +35,29 @@ class RolesAndPermissionsSeeder extends Seeder
 
         // create roles and assign created permissions
         $role1 = Role::create(['name' => 'estudiante']);
-        $role1->givePermissionTo('');
+
+        $role1->givePermissionTo('read_especializacion');
+        $role1->givePermissionTo('read_curso');
+        $role1->givePermissionTo('read_leccion');
+
+        
+        $role2 = Role::create(['name' => 'instructor']);
+        
+        $role2->givePermissionTo('create_especializacion');
+        $role2->givePermissionTo('create_curso');
+        $role2->givePermissionTo('create_leccion');
+
+        $role2->givePermissionTo('read_especializacion');
+        $role2->givePermissionTo('read_curso');
+        $role2->givePermissionTo('read_leccion');
+        
+        $role2->givePermissionTo('update_especializacion');
+        $role2->givePermissionTo('update_curso');
+        $role2->givePermissionTo('update_leccion');
+
+        $role2->givePermissionTo('delete_especializacion');
+        $role2->givePermissionTo('delete_curso');
+        $role2->givePermissionTo('delete_leccion');
 
     }
 }
