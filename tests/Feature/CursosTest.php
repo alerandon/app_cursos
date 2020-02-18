@@ -5,18 +5,53 @@ namespace Tests\Feature;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use App\Cursos;
 
 class CursosTest extends TestCase
 {
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
-    public function testExample()
+    use WithFaker;
+    use RefreshDatabase;
+    
+    /** @test */
+    public function add_curso()
     {
-        $response = $this->get('/');
+        $attributes = [
+            'curso' => 'El Curso',
+            'descripcion' => 'Soy la descripcion que describe',
+        ];
 
-        $response->assertStatus(200);
+        $response = $this->post('/cursos', $attributes);
+
+        $response->assertOk();
+        $this->assertDatabaseHas('cursos', $attributes);
+        $this->assertCount(1, Cursos::all());
+    }
+
+    /** @test */
+    public function curso_is_required() {
+
+        $attributes = [
+            'curso' => '',
+            'descripcion' => 'Soy la descripcion que describe',
+        ];
+
+        $response = $this->post('/cursos', $attributes);
+
+        $response->assertSessionHasErrors('curso');
+
+    }
+
+    /** @test */
+    public function descripcion_is_required() {
+
+        $attributes = [
+            'curso' => 'El Curso',
+            'descripcion' => '',
+        ];
+
+        $response = $this->post('/cursos', $attributes);
+
+        $response->assertSessionHasErrors('descripcion');
+
     }
 }

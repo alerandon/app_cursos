@@ -3,13 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Cursos;
 
 class CursosController extends Controller
 {
     
     public function index() {
 
-        $curso = Cursos::get();
+        $curso = Cursos::all();
 
         return view('cursos.index', compact('curso'));
 
@@ -24,18 +25,16 @@ class CursosController extends Controller
     public function store() {
 
         request()->validate([
-            'especializacion_id' => 'required',
             'curso' => 'required',
             'descripcion' => 'required',
         ]);
 
-        Curso::create([
-            'especializacion_id' => 'required',
-            'curso' => 'required',
-            'descripcion' => 'required',
+        Cursos::create([
+            'curso' => request('curso'),
+            'descripcion' => request('descripcion'),
         ]);
 
-        return redirect('/cursos');
+        //return redirect('/cursos');
 
     }
 
@@ -59,7 +58,7 @@ class CursosController extends Controller
             'descripcion' => 'required',
         ]);
         
-        Curso::update([
+        Cursos::update([
             'especializacion_id' => 'required',
             'curso' => 'required',
             'descripcion' => 'required',
