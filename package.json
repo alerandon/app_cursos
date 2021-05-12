@@ -20,7 +20,7 @@
         "vue-template-compiler": "^2.6.11"
     },
     "dependencies": {
-        "postcss": "^7.0.26",
+        "postcss": "^8.2.10",
         "postcss-loader": "^3.0.0",
         "tailwindcss": "^1.1.4"
     }
